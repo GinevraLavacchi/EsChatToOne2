@@ -22,24 +22,24 @@ public class ServerChat implements Runnable
      * @param client
      * @param outVersoClient2
      */
-    Socket socketclient=null;
+    Contenitore contenitoresocketclient=null;
     String messaggio=null;
     String nomeclient=null;
     BufferedReader inDalClient;
     DataOutputStream outVersoClient;
-    ArrayList<Socket> client;
+    ArrayList<Contenitore> client;
     DataOutputStream outVersoClient2;
     /**
      * costruttore con parametri
      * @param s
      * @param a 
      */
-    public ServerChat(Socket s,ArrayList<Socket> a){
-        socketclient=s;
+    public ServerChat(Socket s,ArrayList<Contenitore> a){
+        contenitoresocketclient=new Contenitore(s);
         client=a;
         try {
-            inDalClient=new BufferedReader(new InputStreamReader(socketclient.getInputStream()));
-            outVersoClient=new DataOutputStream(socketclient.getOutputStream());
+            inDalClient=new BufferedReader(new InputStreamReader(contenitoresocketclient.getMySocket().getInputStream()));
+            outVersoClient=new DataOutputStream(contenitoresocketclient.getMySocket().getOutputStream());
         }
         catch (IOException e) {
             System.out.println(e.getMessage());
@@ -63,18 +63,18 @@ public class ServerChat implements Runnable
      */
     public void comunicazione() throws IOException{
         System.out.println(Thread.currentThread().getName()+"-->"+"In attesa del nome del client.");
-        messaggio=inDalClient.readLine();//legge il nome del client
-        nomeclient=messaggio;
+        nomeclient=inDalClient.readLine();//legge il nome del client
         System.out.println(nomeclient+" >> connesso.");
+        
         if(client.size()>1)//controllo se ci sono almeno 2 client connessi
         {
             client.forEach((c) -> //invio il mess ad ogni client connesso
             {
-                if (!c.equals(this.socketclient)) //per comunicare che si è connesso un altro client, controllo che sia diverso da quelli gia esisenti nell'array
+                if (!c.equals(this.contenitoresocketclient.getMySocket())) //per comunicare che si è connesso un altro client, controllo che sia diverso da quelli gia esisenti nell'array
                 {
                     try 
                     {
-                        outVersoClient2=new DataOutputStream(c.getOutputStream());
+                        outVersoClient2=new DataOutputStream(c.getMySocket().getOutputStream());
                         outVersoClient2.writeBytes(nomeclient+" si e' connesso.\n");
                     }
                     catch (IOException e) 
@@ -111,10 +111,10 @@ public class ServerChat implements Runnable
                 {
                     client.forEach((c) -> 
                     {
-                        if (!c.equals(this.socketclient)) 
+                        if (!c.equals(this.contenitoresocketclient.getMySocket())) 
                         {
                             try {
-                                outVersoClient2=new DataOutputStream(c.getOutputStream());
+                                outVersoClient2=new DataOutputStream(c.getMySocket().getOutputStream());
                                 outVersoClient2.writeBytes(nomeclient+" si e' disconnesso.\n");
                             }
                             catch (IOException e) {
@@ -133,11 +133,11 @@ public class ServerChat implements Runnable
                 {
                     client.forEach((partner) -> //invio il messaggio agli altri client
                     {
-                        if(!partner.equals(this.socketclient))//evito di inviarlo a me stesso
+                        if(!partner.equals(this.contenitoresocketclient.getMySocket()))//evito di inviarlo a me stesso
                         {
                             try 
                             {
-                                outVersoClient2=new DataOutputStream(partner.getOutputStream());
+                                outVersoClient2=new DataOutputStream(partner.getMySocket().getOutputStream());
                                 outVersoClient2.writeBytes("Da: "+nomeclient+"\nTesto: "+messaggio+'\n');
                             }
                             catch (IOException e) 
@@ -164,10 +164,10 @@ public class ServerChat implements Runnable
             }
         }
         //chiudo la comunicazione
-        client.remove(socketclient);
+        client.remove(contenitoresocketclient);
         System.out.println("Comunicazione terminata.");
         outVersoClient.close();
         inDalClient.close();
-        socketclient.close();
+        contenitoresocketclient.getMySocket().close();
     }
 }

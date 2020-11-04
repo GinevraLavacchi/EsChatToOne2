@@ -18,7 +18,7 @@ public class MultiServer
      * @param client
      */
     ServerSocket serversocket;
-    ArrayList<Socket> client=new ArrayList();
+    ArrayList<Contenitore> client=new ArrayList();
     /**
      * il metodo start si occupa della connessione dei client e dell'assegnazione ai thread
      */
@@ -31,7 +31,7 @@ public class MultiServer
             {
                 System.out.println("Nuovo thread in attesa di un client.");
                 Socket clientsocket=serversocket.accept();//rimane in attesa del client
-                client.add(clientsocket);//aggiunge il client all'array
+                client.add(new Contenitore(clientsocket));//aggiunge il client all'array
                 ServerChat serverthread=new ServerChat(clientsocket,client); //crea un oggetto ServerChat a cui passa il socket e l'array
                 Thread t=new Thread(serverthread); //l'oggetto viene assegnato ad un thread
                 t.start();//il thread viene fatto partire
