@@ -52,7 +52,8 @@ public class ServerChat implements Runnable
      */
     public void run() {
         try {
-            comunicazione();
+            //comunicazione();
+            comunicazioneOneToOne();
         } catch (IOException e) {
             e.printStackTrace(System.out);
         }
@@ -169,5 +170,84 @@ public class ServerChat implements Runnable
         outVersoClient.close();
         inDalClient.close();
         contenitoresocketclient.getMySocket().close();
+    }
+    public void comunicazioneOneToOne() throws IOException
+    {
+        if(client.size()>1)//controllo se ci sono almeno 2 client connessi
+        {
+            client.forEach((c) -> //invio il mess ad ogni client connesso
+            {
+                if (!c.equals(this.contenitoresocketclient.getMySocket())) //per comunicare che si è connesso un altro client, controllo che sia diverso da quelli gia esisenti nell'array
+                {
+                    try 
+                    {
+                        outVersoClient2=new DataOutputStream(c.getMySocket().getOutputStream());
+                        outVersoClient2.writeBytes(nomeclient+" si e' connesso.\n");
+                        outVersoClient.writeBytes("con chi vuoi comunicare tra:"+'\n');
+                            for(int i=0;i<client.size();i++)
+                            {
+                                outVersoClient.writeBytes(client.get(i).getNomeUtente()+'\n');
+                            }
+                            String nomesecondo=inDalClient.readLine();
+                            boolean controllo=false;
+                            for(int i=0;i<client.size();i++)
+                            {
+                                if(nomesecondo.equals(client.get(i).getNomeUtente()))
+                                {
+                                    messaggio=inDalClient.readLine();
+                                    outVersoClient2=new DataOutputStream(client.get(i).getMySocket().getOutputStream());
+                                    outVersoClient2.writeBytes("Da: "+contenitoresocketclient.getNomeUtente()+"\nTesto: "+messaggio+'\n');
+                                    controllo=true;//se l'ha trovato
+                                }
+                            }
+                            if(!controllo)
+                            {
+                                outVersoClient.writeBytes("Non esiste nessun client con quel nome utente");
+                            }
+                    }
+                    catch (IOException e) 
+                    {
+                        System.out.println(e.getMessage());
+                        System.out.println(Thread.currentThread().getName()+" >> "+"Errore nella comunicazione col partner del client.");
+                        System.exit(1);
+                    }
+                }
+            });
+        }
+        else//se c'è solo un client connesso
+        {
+            try 
+            {
+                outVersoClient.writeBytes("Sei l'unico utente attualemente connesso.\n");
+            } 
+            catch (IOException e) 
+            {
+                System.out.println(e.getMessage());
+                System.out.println("Errore nella comunicazione col partner del client.");
+                System.exit(1);
+            }
+        }
+        /////////////////////////////////////////////
+        /*outVersoClient.writeBytes("con chi vuoi comunicare tra:"+'\n');
+        for(int i=0;i<client.size();i++)
+        {
+            outVersoClient.writeBytes(client.get(i).getNomeUtente()+'\n');
+        }
+        String nomesecondo=inDalClient.readLine();
+        boolean controllo=false;
+        for(int i=0;i<client.size();i++)
+        {
+            if(nomesecondo.equals(client.get(i).getNomeUtente()))
+            {
+                messaggio=inDalClient.readLine();
+                outVersoClient2=new DataOutputStream(client.get(i).getMySocket().getOutputStream());
+                outVersoClient2.writeBytes("Da: "+contenitoresocketclient.getNomeUtente()+"\nTesto: "+messaggio+'\n');
+                controllo=true;//se l'ha trovato
+            }
+        }
+        if(!controllo)
+        {
+            outVersoClient.writeBytes("Non esiste nessun client con quel nome utente");
+        }*/
     }
 }
