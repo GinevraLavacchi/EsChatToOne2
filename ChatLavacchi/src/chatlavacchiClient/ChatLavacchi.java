@@ -23,5 +23,5 @@ public class ChatLavacchi {
         c.connetti();
         c.comunica();
     }
-    
+    //ciao
 }
