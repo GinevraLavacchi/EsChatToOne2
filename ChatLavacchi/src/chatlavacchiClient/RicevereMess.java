@@ -4,8 +4,17 @@
  * and open the template in the editor.
  */
 package chatlavacchiClient;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.io.*;
 import java.net.*;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 /**
  *
  * @author Ginevra
@@ -25,16 +34,20 @@ class RicevereMess implements Runnable
     String messaggio, risposta;
     DataOutputStream outVersoServer;
     BufferedReader inDalServer;
+    private JPanel chat;
+    
     /**
      * contruttore con parametro
      * @param c 
      */
-    public RicevereMess(Client c){
-        this.input_tastiera=c.input_tastiera;
-        this.messaggio=c.messaggio;
-        this.risposta=c.risposta;
-        this.outVersoServer=c.outVersoServer;
-        this.inDalServer=c.inDalServer;
+    public RicevereMess(JPanel p,BufferedReader i ){
+        //this.input_tastiera=c.input_tastiera;
+        /*this.messaggio=c.messaggio;
+        this.risposta=c.risposta;*/
+        //this.outVersoServer=c.outVersoServer;
+        this.inDalServer=i;
+        this.chat=p;
+        
     }
     @Override
     /**
@@ -47,7 +60,11 @@ class RicevereMess implements Runnable
                 if(risposta.toUpperCase().equals("ADDIO")){
                     return;
                 }
-                System.out.println(risposta);
+                JLabel nuovo=new JLabel("<html>"+risposta+"</html>");
+                //JTextArea nuovo=new JTextArea("<html>"+risposta+"</html>");
+                nuovo.setPreferredSize(new Dimension(100,40));
+                chat.add(nuovo);
+                //chat.setPreferredSize(new Dimension(100,chat.getHeight()+40));
             }
             catch (IOException e) {
                 System.out.println(e.getMessage());

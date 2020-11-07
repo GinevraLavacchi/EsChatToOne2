@@ -63,12 +63,12 @@ public class Client
      * questo metodo si occupa della comunicazione tra client e server creando delle istanze delle classe RicevreMess e InvioMess
      * che poi vengono passate ai thread
      */
-    public void comunica(){
+    /*public void comunica(){
         im=new InvioMess(this);
         rm=new RicevereMess(this);
         Thread threadi=new Thread(im);
         Thread threadr=new Thread(rm);
         threadi.start();
         threadr.start();
-    }
+    }*/
 }

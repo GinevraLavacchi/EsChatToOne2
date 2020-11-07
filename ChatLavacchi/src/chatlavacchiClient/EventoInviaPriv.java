@@ -5,35 +5,33 @@
  */
 package chatlavacchiClient;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 /**
  *
  * @author Ginevra
  */
-public class EventoInviaMess implements ActionListener 
+public class EventoInviaPriv implements ActionListener 
 {
     DataOutputStream outVersoServer;
-    String m;
+    String m,nome;
     JTextField messaggio;
-    public EventoInviaMess(JTextField mess,DataOutputStream o )
+    public EventoInviaPriv(JTextField mess,DataOutputStream o, String n )
     {
+        nome=n;
         messaggio=mess;
         outVersoServer=o;
     }
     public void actionPerformed(ActionEvent e ) {
         m=messaggio.getText();
         try {
-            outVersoServer.writeBytes("tutti:::"+m+'\n');
+            outVersoServer.writeBytes(nome+":::"+m+'\n');
         } catch (IOException ex) {
             Logger.getLogger(EventoInviaMess.class.getName()).log(Level.SEVERE, null, ex);
         }

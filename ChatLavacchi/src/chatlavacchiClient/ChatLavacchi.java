@@ -5,6 +5,9 @@
  */
 package chatlavacchiClient;
 
+import java.io.IOException;
+import static javax.swing.JFrame.EXIT_ON_CLOSE;
+
 /**
  *
  * @author Ginevra
@@ -14,15 +17,16 @@ public class ChatLavacchi {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
     /**
      * @param args the command line arguments
      */
-       /* Client c=new Client();
+       /*Client c=new Client();
         c.connetti();
         c.comunica();*/
         FrameGruppo f=new FrameGruppo();
         f.setVisible(true);
+        f.setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 }

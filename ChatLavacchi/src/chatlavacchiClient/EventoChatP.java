@@ -8,8 +8,11 @@ package chatlavacchiClient;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.DataOutputStream;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 /**
  *
@@ -17,13 +20,17 @@ import javax.swing.JPanel;
  */
 public class EventoChatP implements ActionListener 
 {
+    FramePrivata fp;
+    private String nome;
+    private JComboBox b;
+    DataOutputStream outVersoServer;
+    public EventoChatP(JComboBox f, DataOutputStream o)
+    {
+        b=f;
+        outVersoServer=o;
+    }
     public void actionPerformed(ActionEvent e ) {
-        JFrame j=new JFrame();
-        JPanel p=new JPanel();
-        j.add(p);
-        j.setVisible(true);
-        p.setVisible( true);
-        p.setBackground(Color.red);
-        j.setSize(50, 100);
+        nome=(String) b.getSelectedItem();
+        fp=new FramePrivata(nome, outVersoServer);
     }
 }

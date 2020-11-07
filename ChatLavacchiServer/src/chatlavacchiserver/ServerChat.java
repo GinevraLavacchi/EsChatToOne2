@@ -53,7 +53,8 @@ public class ServerChat implements Runnable
     public void run() {
         try {
             //comunicazione();
-            comunicazioneOneToOne();
+            comunicazione();
+            //comunicazioneOneToOne();
         } catch (IOException e) {
             e.printStackTrace(System.out);
         }
@@ -64,8 +65,16 @@ public class ServerChat implements Runnable
      */
     public void comunicazione() throws IOException{
         System.out.println(Thread.currentThread().getName()+"-->"+"In attesa del nome del client.");
-        nomeclient=inDalClient.readLine();//legge il nome del client
-        System.out.println(nomeclient+" >> connesso.");
+        boolean comunicazione=false;
+        while(!comunicazione)
+        {
+            outVersoClient.writeBytes(" devi inserire il tuo nome per primo.\n");
+            nomeclient=inDalClient.readLine();//legge il nome del client
+            System.out.println(nomeclient+" >> connesso.");
+            comunicazione=true;
+        }
+        System.out.println("PUO INIZIARE");
+        outVersoClient.writeBytes(" puoi iniziare a scrivere.\n");
         
         if(client.size()>1)//controllo se ci sono almeno 2 client connessi
         {
@@ -105,7 +114,9 @@ public class ServerChat implements Runnable
         {
             System.out.println(Thread.currentThread().getName()+" >> "+"In attesa del messaggio da parte del client.");
             messaggio=inDalClient.readLine();
-            if(inDalClient==null||messaggio.toUpperCase().equals("ADDIO"))//guardo se un client ha deciso di uscire
+            String[] appoggio=messaggio.split(":::");
+            
+            if(inDalClient==null||appoggio[1].toUpperCase().equals("ADDIO"))//guardo se un client ha deciso di uscire
             {
                 outVersoClient.writeBytes("ADDIO\n");
                 if(client.size()>1)//se ci sono almeno 2 client ancora collegati avviso che uno si è disconnesso
@@ -132,31 +143,39 @@ public class ServerChat implements Runnable
             {
                 if(client.size()>1)//controllo che siano almeno in 2
                 {
-                    client.forEach((partner) -> //invio il messaggio agli altri client
+                    if(appoggio[0].equals("tutti"))
                     {
-                        if(!partner.equals(this.contenitoresocketclient.getMySocket()))//evito di inviarlo a me stesso
+                        client.forEach((partner) -> //invio il messaggio agli altri client
                         {
-                            try 
-                            {
-                                outVersoClient2=new DataOutputStream(partner.getMySocket().getOutputStream());
-                                outVersoClient2.writeBytes("Da: "+nomeclient+"\nTesto: "+messaggio+'\n');
-                            }
-                            catch (IOException e) 
+                            if(!partner.equals(this.contenitoresocketclient.getMySocket()))//evito di inviarlo a me stesso
                             {
                                 try 
                                 {
-                                    System.out.println(e.getMessage());
-                                    outVersoClient.writeBytes("Errore durante la comunicazione col partner");
+                                    outVersoClient2=new DataOutputStream(partner.getMySocket().getOutputStream());
+                                    outVersoClient2.writeBytes("Da: "+nomeclient+"\nTesto: "+messaggio+'\n');
                                 }
-                                catch (IOException ex) 
+                                catch (IOException e) 
                                 {
-                                    System.out.println(ex.getMessage());
-                                    System.out.println("Errore nella comunicazione col client.");
-                                    System.exit(1);
+                                    try 
+                                    {
+                                        System.out.println(e.getMessage());
+                                        outVersoClient.writeBytes("Errore durante la comunicazione col partner");
+                                    }
+                                    catch (IOException ex) 
+                                    {
+                                        System.out.println(ex.getMessage());
+                                        System.out.println("Errore nella comunicazione col client.");
+                                        System.exit(1);
+                                    }
                                 }
                             }
-                        }
-                    });
+                        });
+                    }
+                    else
+                    {
+                        inviaSingoloMess(appoggio);
+                    }
+                    
                 }
                 else//se è rimasto solo 1 client
                 {
@@ -171,6 +190,39 @@ public class ServerChat implements Runnable
         inDalClient.close();
         contenitoresocketclient.getMySocket().close();
     }
+    public void inviaSingoloMess(String[] appo) throws IOException
+    {
+        client.forEach((partner) -> //invio il messaggio agli altri client
+        {
+            if(partner.getNomeUtente().equals(appo[0]))
+            {
+                try 
+                {
+                    outVersoClient2=new DataOutputStream(partner.getMySocket().getOutputStream());
+                    outVersoClient2.writeBytes("Privato Da: "+nomeclient+"\nTesto: "+appo[1]+'\n');
+                }
+                catch (IOException e) 
+                {
+                    try 
+                    {
+                        System.out.println(e.getMessage());
+                        outVersoClient.writeBytes("Errore durante la comunicazione col partner");
+                    }
+                    catch (IOException ex) 
+                    {
+                        System.out.println(ex.getMessage());
+                        System.out.println("Errore nella comunicazione col client.");
+                        System.exit(1);
+                    }
+                }
+            }
+        });
+    }
+    
+    
+    
+    
+    
     public void comunicazioneOneToOne() throws IOException
     {
         if(client.size()>1)//controllo se ci sono almeno 2 client connessi
