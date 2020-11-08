@@ -22,13 +22,17 @@ public class EventoInvia implements ActionListener
     private JTextField nome;
     private String n;
     DataOutputStream outVersoServer;
-    public EventoInvia(JTextField f,DataOutputStream o )
+    JComboBox elenco;
+    public EventoInvia(JTextField f,DataOutputStream o,JComboBox elenco )
     {
+        this.elenco=elenco;
         nome=f;
         outVersoServer=o;
     }
     public void actionPerformed(ActionEvent e ) {
         n=nome.getText();
+        System.out.println(n);
+        //cambiaNome(n);
         try 
         {
             outVersoServer.writeBytes(n+'\n');
@@ -36,5 +40,9 @@ public class EventoInvia implements ActionListener
         {
             Logger.getLogger(EventoInvia.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    public void cambiaNome(String n)
+    {
+        elenco.addItem(n);
     }
 }

@@ -68,13 +68,13 @@ public class ServerChat implements Runnable
         boolean comunicazione=false;
         while(!comunicazione)
         {
-            outVersoClient.writeBytes("tutti:::"+" devi inserire il tuo nome per primo.\n");
+            outVersoClient.writeBytes("avviso:::"+" devi inserire il tuo nome per primo.\n");
             nomeclient=inDalClient.readLine();//legge il nome del client
             System.out.println(nomeclient+" >> connesso.");
             comunicazione=true;
         }
         System.out.println("PUO INIZIARE");
-        outVersoClient.writeBytes("tutti:::"+" puoi iniziare a scrivere.\n");
+        outVersoClient.writeBytes("avviso:::"+" puoi iniziare a scrivere.\n");
         
         if(client.size()>1)//controllo se ci sono almeno 2 client connessi
         {
@@ -85,7 +85,7 @@ public class ServerChat implements Runnable
                     try 
                     {
                         outVersoClient2=new DataOutputStream(c.getMySocket().getOutputStream());
-                        outVersoClient2.writeBytes("tutti:::"+nomeclient+" si e' connesso.\n");
+                        outVersoClient2.writeBytes("nome:::"+nomeclient+"::: si e' connesso.\n");
                     }
                     catch (IOException e) 
                     {
@@ -100,7 +100,7 @@ public class ServerChat implements Runnable
         {
             try 
             {
-                outVersoClient.writeBytes("tutti:::"+"Sei l'unico utente attualemente connesso.\n");
+                outVersoClient.writeBytes("avviso:::"+"Sei l'unico utente attualemente connesso.\n");
             } 
             catch (IOException e) 
             {
@@ -127,7 +127,7 @@ public class ServerChat implements Runnable
                         {
                             try {
                                 outVersoClient2=new DataOutputStream(c.getMySocket().getOutputStream());
-                                outVersoClient2.writeBytes("tutti:::"+nomeclient+" si e' disconnesso.\n");
+                                outVersoClient2.writeBytes("avvisoDisc:::"+nomeclient+" si e' disconnesso.\n");
                             }
                             catch (IOException e) {
                                 System.out.println(e.getMessage());
@@ -152,7 +152,7 @@ public class ServerChat implements Runnable
                                 try 
                                 {
                                     outVersoClient2=new DataOutputStream(partner.getMySocket().getOutputStream());
-                                    outVersoClient2.writeBytes("tutti:::"+"Da: "+nomeclient+"--> Testo: "+appoggio[1]+'\n');
+                                    outVersoClient2.writeBytes("tutti:::"+"Da: :::"+nomeclient+":::--> Testo: "+appoggio[1]+'\n');
                                 }
                                 catch (IOException e) 
                                 {
@@ -192,14 +192,17 @@ public class ServerChat implements Runnable
     }
     public void inviaSingoloMess(String[] appo) throws IOException
     {
-        client.forEach((partner) -> //invio il messaggio agli altri client
+        System.out.println("dentro invia Singolo");
+        client.forEach((partner) ->
         {
-            if(partner.getNomeUtente().equals(appo[0]))
-            {
+            //System.out.println(partner.getNomeUtente());
+           // if((appo[1]).equals(partner.getMySocket()))
+            //{
                 try 
                 {
                     outVersoClient2=new DataOutputStream(partner.getMySocket().getOutputStream());
-                    outVersoClient2.writeBytes("Privato::: Da: "+nomeclient+"\nTesto: "+appo[1]+'\n');
+                    outVersoClient2.writeBytes("Privato::: Da: "+nomeclient+"-->Testo: "+appo[2]+'\n');
+                    System.out.println("Da: "+nomeclient+"-->Testo: "+appo[2]+'\n');
                 }
                 catch (IOException e) 
                 {
@@ -215,7 +218,7 @@ public class ServerChat implements Runnable
                         System.exit(1);
                     }
                 }
-            }
+            //}
         });
     }
     
@@ -225,7 +228,8 @@ public class ServerChat implements Runnable
     
     public void comunicazioneOneToOne() throws IOException
     {
-        if(client.size()>1)//controllo se ci sono almeno 2 client connessi
+        
+        /*if(client.size()>1)//controllo se ci sono almeno 2 client connessi
         {
             client.forEach((c) -> //invio il mess ad ogni client connesso
             {
@@ -234,7 +238,7 @@ public class ServerChat implements Runnable
                     try 
                     {
                         outVersoClient2=new DataOutputStream(c.getMySocket().getOutputStream());
-                        outVersoClient2.writeBytes(nomeclient+" si e' connesso.\n");
+                        outVersoClient2.writeBytes("Privato:::"+nomeclient+" si e' connesso.\n");
                         outVersoClient.writeBytes("con chi vuoi comunicare tra:"+'\n');
                             for(int i=0;i<client.size();i++)
                             {
@@ -267,7 +271,7 @@ public class ServerChat implements Runnable
             });
         }
         else//se c'è solo un client connesso
-        {
+       {
             try 
             {
                 outVersoClient.writeBytes("Sei l'unico utente attualemente connesso.\n");
@@ -278,28 +282,7 @@ public class ServerChat implements Runnable
                 System.out.println("Errore nella comunicazione col partner del client.");
                 System.exit(1);
             }
-        }
-        /////////////////////////////////////////////
-        /*outVersoClient.writeBytes("con chi vuoi comunicare tra:"+'\n');
-        for(int i=0;i<client.size();i++)
-        {
-            outVersoClient.writeBytes(client.get(i).getNomeUtente()+'\n');
-        }
-        String nomesecondo=inDalClient.readLine();
-        boolean controllo=false;
-        for(int i=0;i<client.size();i++)
-        {
-            if(nomesecondo.equals(client.get(i).getNomeUtente()))
-            {
-                messaggio=inDalClient.readLine();
-                outVersoClient2=new DataOutputStream(client.get(i).getMySocket().getOutputStream());
-                outVersoClient2.writeBytes("Da: "+contenitoresocketclient.getNomeUtente()+"\nTesto: "+messaggio+'\n');
-                controllo=true;//se l'ha trovato
-            }
-        }
-        if(!controllo)
-        {
-            outVersoClient.writeBytes("Non esiste nessun client con quel nome utente");
         }*/
+        
     }
 }

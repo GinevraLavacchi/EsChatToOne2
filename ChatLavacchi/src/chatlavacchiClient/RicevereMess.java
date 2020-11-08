@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package chatlavacchiClient;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -11,11 +12,13 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.io.*;
 import java.net.*;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
+import javax.swing.border.LineBorder;
 /**
  *
  * @author Ginevra
@@ -37,11 +40,12 @@ class RicevereMess implements Runnable
     BufferedReader inDalServer;
     private JPanel chat;
     JScrollPane jsp;
+    JComboBox elenco;
     /**
      * contruttore con parametro
      * @param c 
      */
-    public RicevereMess(JScrollPane jsp,JPanel p,BufferedReader i ){
+    public RicevereMess(JScrollPane jsp,JPanel p,BufferedReader i,JComboBox elenco ){
         //this.input_tastiera=c.input_tastiera;
         /*this.messaggio=c.messaggio;
         this.risposta=c.risposta;*/
@@ -49,6 +53,7 @@ class RicevereMess implements Runnable
         this.inDalServer=i;
         this.chat=p;
         this.jsp=jsp;
+        this.elenco=elenco;
     }
     @Override
     /**
@@ -65,18 +70,80 @@ class RicevereMess implements Runnable
                 }*/
                 if(appoggio[0].equals("tutti"))
                 {
-                    String appo=appoggio[1];
+                    String appo=appoggio[1]+appoggio[2]+appoggio[3];
                     System.out.println(appo);
+                    String nome=appoggio[2];
+                    System.out.println(nome);
+                    if(elenco.getItemCount()>0)
+                    {
+                        for(int i=0;i<elenco.getItemCount()+1;i++)
+                        {
+                            if(elenco.getItemAt(i).equals(nome))
+                            {
+                                return;
+                            }
+                            else
+                            {
+                                elenco.addItem(nome);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        elenco.addItem(nome);
+                    }
                     JLabel nuovo=new JLabel("<html>"+appo+"</html>");
-                    //JTextArea nuovo=new JTextArea("<html>"+risposta+"</html>");
                     nuovo.setPreferredSize(new Dimension(300,40));
+                    nuovo.setBorder(new LineBorder(Color.black, 2, true));
+                    nuovo.setVisible(true);
                     chat.add(nuovo);
                     jsp.setViewportView(chat);
                     chat.setPreferredSize(new Dimension(100,chat.getHeight()+40));
                     //jsp.setPreferredSize(new Dimension(100,jsp.getHeight()+40));
                     
                 }
-                
+               if(appoggio[0].equals("avviso"))
+                {
+                    String appo=appoggio[1];
+                    System.out.println(appo);
+                    JLabel nuovo=new JLabel("<html>"+appo+"</html>");
+                    nuovo.setBorder(new LineBorder(Color.red, 2, true));
+                    //JTextArea nuovo=new JTextArea("<html>"+risposta+"</html>");
+                    nuovo.setPreferredSize(new Dimension(300,40));
+                    nuovo.setVisible(true);
+                    chat.add(nuovo);
+                    jsp.setViewportView(chat);
+                    chat.setPreferredSize(new Dimension(100,chat.getHeight()+40));
+                }
+                if(appoggio[0].equals("nome"))
+                {
+                    String appo=appoggio[1]+appoggio[2];
+                    System.out.println(appo);
+                    String nome=appoggio[1];
+                    System.out.println(nome);
+                    elenco.addItem(nome);
+                    JLabel nuovo=new JLabel("<html>"+appo+"</html>");
+                    nuovo.setBorder(new LineBorder(Color.red, 2, true));
+                    //JTextArea nuovo=new JTextArea("<html>"+risposta+"</html>");
+                    nuovo.setPreferredSize(new Dimension(300,40));
+                    nuovo.setVisible(true);
+                    chat.add(nuovo);
+                    jsp.setViewportView(chat);
+                    chat.setPreferredSize(new Dimension(100,chat.getHeight()+40));
+                }
+                if(appoggio[0].equals("avvisoDisc"))
+                {
+                    String appo=appoggio[1];
+                    System.out.println(appo);
+                    JLabel nuovo=new JLabel("<html>"+appo+"</html>");
+                    nuovo.setBorder(new LineBorder(Color.red, 2, true));
+                    //JTextArea nuovo=new JTextArea("<html>"+risposta+"</html>");
+                    nuovo.setPreferredSize(new Dimension(300,40));
+                    nuovo.setVisible(true);
+                    chat.add(nuovo);
+                    jsp.setViewportView(chat);
+                    chat.setPreferredSize(new Dimension(100,chat.getHeight()+40));
+                }
                 SwingUtilities.updateComponentTreeUI(chat);
             }
             catch (IOException e) {

@@ -31,7 +31,7 @@ public class EventoInviaPriv implements ActionListener
     public void actionPerformed(ActionEvent e ) {
         m=messaggio.getText();
         try {
-            outVersoServer.writeBytes(nome+":::"+m+'\n');
+            outVersoServer.writeBytes("Privato:::"+nome+":::"+m+'\n');
         } catch (IOException ex) {
             Logger.getLogger(EventoInviaMess.class.getName()).log(Level.SEVERE, null, ex);
         }

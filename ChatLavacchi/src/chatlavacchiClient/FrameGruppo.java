@@ -23,8 +23,9 @@ public class FrameGruppo extends JFrame
     private JLabel benvenuto, chatpriv,mess;
     private JTextField nome,messaggio;
     private JButton inviaNome,inviaMess;
-    private JComboBox elenco;
-    private String[] momentaneo={"ciccio","io"};
+    private JComboBox elenco=new JComboBox();
+    private String[] momentaneo;
+    //private String[] momentaneo={"ciccio","io"};
     private String appo;
     private JScrollPane jsp;
      Socket socket;
@@ -68,7 +69,7 @@ public class FrameGruppo extends JFrame
         c.gridx++;
         pannello.add(nome, c);//la aggiungo al pannello
         inviaNome=new JButton("Invia");//creo il bottone
-        EventoInvia ei=new EventoInvia(nome,outVersoServer);//creo l'evento per inviare il nome
+        EventoInvia ei=new EventoInvia(nome,outVersoServer,elenco);//creo l'evento per inviare il nome
         inviaNome.addActionListener(ei);
         c.gridy++;
         c.gridx--;
@@ -83,7 +84,7 @@ public class FrameGruppo extends JFrame
         jsp.setPreferredSize(new Dimension(320,190));
         pannello.add(jsp,c);//la aggiungo al pannello
         chat.setVisible(true);
-         RicevereMess rm=new RicevereMess(jsp,chat,inDalServer);
+         RicevereMess rm=new RicevereMess(jsp,chat,inDalServer,elenco);
         //jsp.setViewportView();
         Thread t=new Thread(rm);
         t.start();
@@ -119,8 +120,6 @@ public class FrameGruppo extends JFrame
         c1.gridy++;
         pannello1.add(chatpriv, c1);//la aggiungo al pannello
         chatpriv.setVisible(true);//la rendo visibile
-        
-        elenco= new JComboBox(momentaneo);
         c1.gridy++;
         pannello1.add(elenco, c);
         EventoChatP ec=new EventoChatP(elenco,outVersoServer, inDalServer);

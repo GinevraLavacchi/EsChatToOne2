@@ -64,9 +64,9 @@ public class FramePrivata extends JFrame
         jsp.setPreferredSize(new Dimension(320,190));
         p.add(jsp,c);//la aggiungo al pannello
         chat.setVisible(true);
-         RicevereMess rm=new RicevereMess(jsp,chat,inDalServer);
+         RicevereMessPriv rmp=new RicevereMessPriv(jsp,chat,inDalServer);
         //jsp.setViewportView();
-        Thread t=new Thread(rm);
+        Thread t=new Thread(rmp);
         t.start();
          SwingUtilities.updateComponentTreeUI(chat);
         JLabel m=new JLabel("Messaggio-->");
