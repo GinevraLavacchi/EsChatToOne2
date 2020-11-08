@@ -21,13 +21,13 @@ import java.util.*;
  */
 public class ServerChat implements Runnable
 {
-    Contenitore contenitoresocketclient=null;
-    String messaggio=null;
-    String nomeclient=null;
-    BufferedReader inDalClient;
-    DataOutputStream outVersoClient;
-    ArrayList<Contenitore> client;
-    DataOutputStream outVersoClient2;
+    private Contenitore contenitoresocketclient=null;
+    private String messaggio=null;
+    private String nomeclient=null;
+    private BufferedReader inDalClient;
+    private DataOutputStream outVersoClient;
+    private ArrayList<Contenitore> client;
+    private DataOutputStream outVersoClient2;
     /**
      * costruttore con parametri
      * @param s

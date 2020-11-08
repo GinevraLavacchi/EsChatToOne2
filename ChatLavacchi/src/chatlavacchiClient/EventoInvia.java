@@ -25,7 +25,7 @@ public class EventoInvia implements ActionListener
 {
     private JTextField nome;
     private String n;
-    DataOutputStream outVersoServer;
+    private DataOutputStream outVersoServer;
     //JComboBox elenco;
     /**
      * costruttore con parametri

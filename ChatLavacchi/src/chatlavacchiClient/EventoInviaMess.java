@@ -26,9 +26,9 @@ import javax.swing.JTextField;
  */
 public class EventoInviaMess implements ActionListener 
 {
-    DataOutputStream outVersoServer;
-    String m;
-    JTextField messaggio;
+    private DataOutputStream outVersoServer;
+    private String m;
+    private JTextField messaggio;
     /**
      * contruttore con parametri
      * @param mess

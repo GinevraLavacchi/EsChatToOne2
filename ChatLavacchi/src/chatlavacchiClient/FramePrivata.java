@@ -33,15 +33,15 @@ import javax.swing.*;
  */
 public class FramePrivata extends JFrame
 {
-    JPanel p;
-    String nome;
-    JLabel label,benvenuto= new JLabel("BENVENUTO!!");
-    JPanel chat;
-    JTextField messaggio;
-    JButton inviaMess;
-    DataOutputStream outVersoServer;
-    BufferedReader inDalServer;
-    JScrollPane jsp;
+    private JPanel p;
+    private String nome;
+    private JLabel label,benvenuto= new JLabel("BENVENUTO!!");
+    private JPanel chat;
+    private JTextField messaggio;
+    private JButton inviaMess;
+    private DataOutputStream outVersoServer;
+    private BufferedReader inDalServer;
+    private JScrollPane jsp;
     /**
      * il costruttore con parametri
      * @param nome

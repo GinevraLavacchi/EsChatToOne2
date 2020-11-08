@@ -30,13 +30,13 @@ import javax.swing.SwingUtilities;
  */
 class RicevereMessPriv implements Runnable
 {
-    Socket socket;
-    BufferedReader input_tastiera;
-    String risposta;
-    DataOutputStream outVersoServer;
-    BufferedReader inDalServer;
+    private Socket socket;
+    private BufferedReader input_tastiera;
+    private String risposta;
+    private DataOutputStream outVersoServer;
+    private BufferedReader inDalServer;
     private JPanel chat;
-    JScrollPane jsp;
+    private JScrollPane jsp;
     /**
      * contruttore con parametro
      * @param c 

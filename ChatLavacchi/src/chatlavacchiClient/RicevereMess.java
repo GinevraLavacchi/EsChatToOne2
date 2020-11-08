@@ -27,25 +27,24 @@ import javax.swing.border.LineBorder;
  *
  * @author Ginevra
  * la classe che si occupa di riceve i messaggi
- * @param socket
- * @param input_tastiera
- * @param messaggio
- * @param risposta
- * @param outVersoServer
- * @param inDalServer
+ * @param socket il socket
+ * @param input_tastiera il BufferedReader per leggere i messaggi di risposta
+ * @param risposta la risposta del sever
+ * @param outVersoServer il DataOutputStream
+ * @param inDalServer il BufferedReader
  */
 class RicevereMess implements Runnable
 {
-    Socket socket;
-    BufferedReader input_tastiera;
-    String messaggio, risposta;
-    DataOutputStream outVersoServer;
-    BufferedReader inDalServer;
+    private Socket socket;
+    private BufferedReader input_tastiera;
+    private String risposta;
+    private DataOutputStream outVersoServer;
+    private BufferedReader inDalServer;
     private JPanel chat;
-    JScrollPane jsp;
-    JComboBox elenco;
-    ArrayList<String> elencoNomi;
-    boolean cont=false;
+    private JScrollPane jsp;
+    private JComboBox elenco;
+    private ArrayList<String> elencoNomi;
+    private boolean cont=false;
     /**
      * contruttore con parametro
      * @param c 

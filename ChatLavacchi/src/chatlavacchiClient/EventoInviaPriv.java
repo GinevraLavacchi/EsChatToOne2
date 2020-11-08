@@ -24,9 +24,9 @@ import javax.swing.JTextField;
  */
 public class EventoInviaPriv implements ActionListener 
 {
-    DataOutputStream outVersoServer;
-    String m,nome;
-    JTextField messaggio;
+    private DataOutputStream outVersoServer;
+    private String m,nome;
+    private JTextField messaggio;
     /**
      * il costruttore con parametri
      * @param mess

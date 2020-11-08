@@ -48,10 +48,10 @@ public class FrameGruppo extends JFrame
     private JComboBox elenco=new JComboBox();
     private JScrollPane jsp;
      Socket socket;
-    DataOutputStream outVersoServer;
-    BufferedReader inDalServer;
-    String nomeserver="localhost";
-    int portaserver=1234;
+    private DataOutputStream outVersoServer;
+    private BufferedReader inDalServer;
+    private String nomeserver="localhost";
+    private int portaserver=1234;
     /**
      * il costruttore
      * @throws IOException 

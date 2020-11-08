@@ -16,8 +16,8 @@ import java.util.ArrayList;
  */
 public class MultiServer 
 {
-    ServerSocket serversocket;
-    ArrayList<Contenitore> client=new ArrayList();
+    private ServerSocket serversocket;
+    private ArrayList<Contenitore> client=new ArrayList();
     /**
      * il metodo start si occupa della connessione dei client e dell'assegnazione ai thread
      */

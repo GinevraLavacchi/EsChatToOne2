@@ -28,11 +28,11 @@ import javax.swing.JTextField;
  */
 public class EventoChatP implements ActionListener 
 {
-    FramePrivata fp;
+    private FramePrivata fp;
     private String nome;
     private JComboBox b;
-    DataOutputStream outVersoServer;
-    BufferedReader inDalServer;
+    private DataOutputStream outVersoServer;
+    private BufferedReader inDalServer;
     /**
      * costruttore con parametri
      * @param f
