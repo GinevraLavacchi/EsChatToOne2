@@ -16,19 +16,33 @@ import javax.swing.*;
 /**
  *
  * @author Ginevra
+ * questa classe gestisce l'invio del nome al server
+ * @param nome il JTextFiel in cui è scritto il nome
+ * @param n il nome ricavato dal JTextField
+ * @param outVersoServer il DataOutputSream
  */
 public class EventoInvia implements ActionListener 
 {
     private JTextField nome;
     private String n;
     DataOutputStream outVersoServer;
-    JComboBox elenco;
+    //JComboBox elenco;
+    /**
+     * costruttore con parametri
+     * @param f
+     * @param o
+     * @param elenco 
+     */
     public EventoInvia(JTextField f,DataOutputStream o,JComboBox elenco )
     {
-        this.elenco=elenco;
+       // this.elenco=elenco;
         nome=f;
         outVersoServer=o;
     }
+    /**
+     * l'evento
+     * @param e 
+     */
     public void actionPerformed(ActionEvent e ) {
         n=nome.getText();
         System.out.println(n);
@@ -41,8 +55,8 @@ public class EventoInvia implements ActionListener
             Logger.getLogger(EventoInvia.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public void cambiaNome(String n)
+    /*public void cambiaNome(String n)
     {
         elenco.addItem(n);
-    }
+    }*/
 }

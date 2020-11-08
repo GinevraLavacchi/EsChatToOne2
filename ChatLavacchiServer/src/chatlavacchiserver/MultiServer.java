@@ -10,13 +10,12 @@ import java.util.ArrayList;
 /**
  *
  * @author Ginevra
+ * la classe che gestisce la creazione dei thread server
+ * @param serversocket la porta
+ * @param client l'arrayList contenente i contenitori
  */
 public class MultiServer 
 {
-    /**
-     * @param serversocket
-     * @param client
-     */
     ServerSocket serversocket;
     ArrayList<Contenitore> client=new ArrayList();
     /**

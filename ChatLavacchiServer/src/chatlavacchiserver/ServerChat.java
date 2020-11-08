@@ -10,18 +10,17 @@ import java.util.*;
 /**
  *
  * @author Ginevra
+ * il tread che si occupa dell'invio dei mess
+ * @param contenitoresocketclient è il contenitore del client a cui è associato questo thread
+ * @param messaggio è il messaggio da inviare
+ * @param nomeclient è il nome del client
+ * @param inDalClient è il BufferedRreader
+ * @param outVersoClient è il DataOutputStream verso questo client
+ * @param client è l'array dei contenitori
+ * @param outVersoClient2 è il DataOutputStream verso gli altri client
  */
 public class ServerChat implements Runnable
 {
-    /**
-     * @param socketclient
-     * @param messaggio
-     * @param nomeclient
-     * @param inDalClient
-     * @param outVersoClient
-     * @param client
-     * @param outVersoClient2
-     */
     Contenitore contenitoresocketclient=null;
     String messaggio=null;
     String nomeclient=null;
@@ -29,7 +28,6 @@ public class ServerChat implements Runnable
     DataOutputStream outVersoClient;
     ArrayList<Contenitore> client;
     DataOutputStream outVersoClient2;
-    int mom;
     /**
      * costruttore con parametri
      * @param s
@@ -38,7 +36,6 @@ public class ServerChat implements Runnable
     public ServerChat(Socket s,ArrayList<Contenitore> a){
         contenitoresocketclient=new Contenitore(s);
         client=a;
-        mom=client.size();
         try {
             inDalClient=new BufferedReader(new InputStreamReader(contenitoresocketclient.getMySocket().getInputStream()));
             outVersoClient=new DataOutputStream(contenitoresocketclient.getMySocket().getOutputStream());
@@ -190,6 +187,11 @@ public class ServerChat implements Runnable
         inDalClient.close();
         contenitoresocketclient.getMySocket().close();
     }
+    /**
+     * gestisce la comunicazione OneToOne
+     * @param appo
+     * @throws IOException 
+     */
     public void inviaSingoloMess(String[] appo) throws IOException
     {
         System.out.println("dentro invia Singolo");
@@ -220,69 +222,5 @@ public class ServerChat implements Runnable
                 }
             //}
         });
-    }
-    
-    
-    
-    
-    
-    public void comunicazioneOneToOne() throws IOException
-    {
-        
-        /*if(client.size()>1)//controllo se ci sono almeno 2 client connessi
-        {
-            client.forEach((c) -> //invio il mess ad ogni client connesso
-            {
-                if (!c.equals(this.contenitoresocketclient.getMySocket())) //per comunicare che si è connesso un altro client, controllo che sia diverso da quelli gia esisenti nell'array
-                {
-                    try 
-                    {
-                        outVersoClient2=new DataOutputStream(c.getMySocket().getOutputStream());
-                        outVersoClient2.writeBytes("Privato:::"+nomeclient+" si e' connesso.\n");
-                        outVersoClient.writeBytes("con chi vuoi comunicare tra:"+'\n');
-                            for(int i=0;i<client.size();i++)
-                            {
-                                outVersoClient.writeBytes(client.get(i).getNomeUtente()+'\n');
-                            }
-                            String nomesecondo=inDalClient.readLine();
-                            boolean controllo=false;
-                            for(int i=0;i<client.size();i++)
-                            {
-                                if(nomesecondo.equals(client.get(i).getNomeUtente()))
-                                {
-                                    messaggio=inDalClient.readLine();
-                                    outVersoClient2=new DataOutputStream(client.get(i).getMySocket().getOutputStream());
-                                    outVersoClient2.writeBytes("Da: "+contenitoresocketclient.getNomeUtente()+"\nTesto: "+messaggio+'\n');
-                                    controllo=true;//se l'ha trovato
-                                }
-                            }
-                            if(!controllo)
-                            {
-                                outVersoClient.writeBytes("Non esiste nessun client con quel nome utente");
-                            }
-                    }
-                    catch (IOException e) 
-                    {
-                        System.out.println(e.getMessage());
-                        System.out.println(Thread.currentThread().getName()+" >> "+"Errore nella comunicazione col partner del client.");
-                        System.exit(1);
-                    }
-                }
-            });
-        }
-        else//se c'è solo un client connesso
-       {
-            try 
-            {
-                outVersoClient.writeBytes("Sei l'unico utente attualemente connesso.\n");
-            } 
-            catch (IOException e) 
-            {
-                System.out.println(e.getMessage());
-                System.out.println("Errore nella comunicazione col partner del client.");
-                System.exit(1);
-            }
-        }*/
-        
     }
 }

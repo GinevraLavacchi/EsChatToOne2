@@ -26,17 +26,16 @@ import javax.swing.border.LineBorder;
 /**
  *
  * @author Ginevra
+ * la classe che si occupa di riceve i messaggi
+ * @param socket
+ * @param input_tastiera
+ * @param messaggio
+ * @param risposta
+ * @param outVersoServer
+ * @param inDalServer
  */
 class RicevereMess implements Runnable
 {
-    /**
-     * @param socket
-     * @param input_tastiera
-     * @param messaggio
-     * @param risposta
-     * @param outVersoServer
-     * @param inDalServer
-     */
     Socket socket;
     BufferedReader input_tastiera;
     String messaggio, risposta;
@@ -52,10 +51,6 @@ class RicevereMess implements Runnable
      * @param c 
      */
     public RicevereMess(JScrollPane jsp,JPanel p,BufferedReader i,JComboBox elenco ){
-        //this.input_tastiera=c.input_tastiera;
-        /*this.messaggio=c.messaggio;
-        this.risposta=c.risposta;*/
-        //this.outVersoServer=c.outVersoServer;
         this.inDalServer=i;
         this.chat=p;
         this.jsp=jsp;
@@ -76,15 +71,15 @@ class RicevereMess implements Runnable
                 /*if(appoggio[1].toUpperCase().equals("ADDIO")){
                     return;
                 }*/
-                if(appoggio[0].equals("tutti"))
+                if(appoggio[0].equals("tutti"))//controllo se il messaggio va visualizzato perchè è per tutti
                 {
-                    String appo=appoggio[1]+appoggio[2]+appoggio[3];
+                    String appo=appoggio[1]+appoggio[2]+appoggio[3];//salvo il messaggio
                     System.out.println(appo);
-                    String nome=appoggio[2];
+                    String nome=appoggio[2];//salvo il nome
                     System.out.println(nome);
-                    System.out.println("fuori for"+"-->numero elementi"+elenco.getItemCount());
+                    //System.out.println("fuori for"+"-->numero elementi"+elenco.getItemCount());
                     
-                    if(elencoNomi.isEmpty())
+                    if(elencoNomi.isEmpty())//guardo se l'elenco è vuoto
                     {
                         elencoNomi.add(nome);
                         elenco.addItem(nome);
@@ -107,7 +102,7 @@ class RicevereMess implements Runnable
                         }
                     }
                     
-                    JLabel nuovo=new JLabel("<html>"+appo+"</html>");
+                    JLabel nuovo=new JLabel("<html>"+appo+"</html>");//creo la label con il messaggio
                     nuovo.setPreferredSize(new Dimension(300,20));
                     nuovo.setAlignmentX(Component.LEFT_ALIGNMENT);
                     nuovo.setBorder(new LineBorder(Color.black, 1, true));
@@ -117,45 +112,40 @@ class RicevereMess implements Runnable
                     chat.add(b);
                     jsp.setViewportView(chat);
                     chat.setPreferredSize(new Dimension(100,chat.getHeight()+40));
-                    
                 }
-               if(appoggio[0].equals("avviso"))
+               if(appoggio[0].equals("avviso"))//controllo se fa parte degli avvisi
                 {
                     String appo=appoggio[1];
                     System.out.println(appo);
-                    JLabel nuovo=new JLabel("<html>"+appo+"</html>",SwingConstants.RIGHT);
+                    JLabel nuovo=new JLabel("<html>"+appo+"</html>",SwingConstants.RIGHT);//creo la label
                     nuovo.setBorder(new LineBorder(Color.red, 1, true));
-                    //nuovo.setAlignmentX(Component.RIGHT_ALIGNMENT);
                     nuovo.setPreferredSize(new Dimension(300,20));
                     nuovo.setVisible(true);
                     chat.add(nuovo);
                     jsp.setViewportView(chat);
                     chat.setPreferredSize(new Dimension(100,chat.getHeight()+40));
                 }
-                if(appoggio[0].equals("nome"))
+                if(appoggio[0].equals("nome"))//controllo se è l'avviso di connesione
                 {
                     String appo=appoggio[1]+appoggio[2];
                     System.out.println(appo);
                     String nome=appoggio[1];
                     System.out.println(nome);
                     elenco.addItem(nome);
-                    //elencoNomi.add(nome);
-                    JLabel nuovo=new JLabel("<html>"+appo+"</html>",SwingConstants.RIGHT);
+                    JLabel nuovo=new JLabel("<html>"+appo+"</html>",SwingConstants.RIGHT);//creo la label
                     nuovo.setBorder(new LineBorder(Color.red, 1, true));
-                    //nuovo.setAlignmentX(Component.RIGHT_ALIGNMENT);
                     nuovo.setPreferredSize(new Dimension(300,20));
                     nuovo.setVisible(true);
                     chat.add(nuovo);
                     jsp.setViewportView(chat);
                     chat.setPreferredSize(new Dimension(100,chat.getHeight()+40));
                 }
-                if(appoggio[0].equals("avvisoDisc"))
+                if(appoggio[0].equals("avvisoDisc"))//controllo se è l'avviso di disconnessione
                 {
                     String appo=appoggio[1]+appoggio[2];
                     String nome=appoggio[1];
                     System.out.println(appo);
-                    JLabel nuovo=new JLabel("<html>"+appo+"</html>",SwingConstants.RIGHT);
-                    //nuovo.setAlignmentX(Component.RIGHT_ALIGNMENT);
+                    JLabel nuovo=new JLabel("<html>"+appo+"</html>",SwingConstants.RIGHT);//creo la label
                     elenco.removeItem(nome);
                     nuovo.setBorder(new LineBorder(Color.red, 1, true));
                     nuovo.setPreferredSize(new Dimension(300,20));

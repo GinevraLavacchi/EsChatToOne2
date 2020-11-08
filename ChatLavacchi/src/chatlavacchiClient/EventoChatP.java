@@ -18,6 +18,13 @@ import javax.swing.JTextField;
 /**
  *
  * @author Ginevra
+ * 
+* questa classe gestisce l'apertura della chat privata con un client scelto
+* @param fp l'istanza del frame della chat privata
+* @param nome il nome del client con cui si vuole comunicare
+* @param b la comboBox dalla quale prendiamo l'elemento scelto
+* @param outVersoServer //il DataOutputStream
+* @param inDalServer //il BufferedReader
  */
 public class EventoChatP implements ActionListener 
 {
@@ -26,12 +33,22 @@ public class EventoChatP implements ActionListener
     private JComboBox b;
     DataOutputStream outVersoServer;
     BufferedReader inDalServer;
+    /**
+     * costruttore con parametri
+     * @param f
+     * @param o
+     * @param i 
+     */
     public EventoChatP(JComboBox f, DataOutputStream o, BufferedReader i)
     {
         b=f;
         outVersoServer=o;
         inDalServer=i;
     }
+    /**
+     * l'evento
+     * @param e 
+     */
     public void actionPerformed(ActionEvent e ) {
         nome=(String) b.getSelectedItem();
         fp=new FramePrivata(nome, outVersoServer,inDalServer);

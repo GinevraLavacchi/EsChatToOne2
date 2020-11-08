@@ -19,17 +19,30 @@ import javax.swing.JTextField;
 /**
  *
  * @author Ginevra
+ * la classe che gestisce l'invio del messaggio al server
+ * @param outVersoServer il DataOutputStream 
+ * @param m la stringa del messaggio ricavata dal JTextField
+ * @param messaggio il JTextField che contiene il messaggio
  */
 public class EventoInviaMess implements ActionListener 
 {
     DataOutputStream outVersoServer;
     String m;
     JTextField messaggio;
+    /**
+     * contruttore con parametri
+     * @param mess
+     * @param o 
+     */
     public EventoInviaMess(JTextField mess,DataOutputStream o )
     {
         messaggio=mess;
         outVersoServer=o;
     }
+    /**
+     * l'evento
+     * @param e 
+     */
     public void actionPerformed(ActionEvent e ) {
         m=messaggio.getText();
         try {

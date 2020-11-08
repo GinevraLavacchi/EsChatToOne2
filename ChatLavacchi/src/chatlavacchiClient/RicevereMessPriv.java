@@ -19,20 +19,20 @@ import javax.swing.SwingUtilities;
 /**
  *
  * @author Ginevra
+ * la classe che si occupa di riceve i messaggi nella chat privata
+ *  @param socket il socket
+ * @param input_tastiera il BufferedReader per leggere i messaggi di risposta
+ * @param risposta la risposta del server
+ * @param outVersoServer il DataOutputStream
+ * @param inDalServer il BufferedReader
+ * @param chat il pannello della chat
+ * @param jsp lo scrollPane che contiene la chat
  */
 class RicevereMessPriv implements Runnable
 {
-    /**
-     * @param socket
-     * @param input_tastiera
-     * @param messaggio
-     * @param risposta
-     * @param outVersoServer
-     * @param inDalServer
-     */
     Socket socket;
     BufferedReader input_tastiera;
-    String messaggio, risposta;
+    String risposta;
     DataOutputStream outVersoServer;
     BufferedReader inDalServer;
     private JPanel chat;
@@ -60,17 +60,15 @@ class RicevereMessPriv implements Runnable
                 /*if(appoggio[1].toUpperCase().equals("ADDIO")){
                     return;
                 }*/
-                if(appoggio[0].equals("Privato"))
+                if(appoggio[0].equals("Privato"))//guardo se è per la chat privata
                 {
                     String appo=appoggio[1];
                     System.out.println(appo);
                     JLabel nuovo=new JLabel("<html>"+appo+"</html>");
-                    //JTextArea nuovo=new JTextArea("<html>"+risposta+"</html>");
                     nuovo.setPreferredSize(new Dimension(300,40));
                     chat.add(nuovo);
                     jsp.setViewportView(chat);
                     chat.setPreferredSize(new Dimension(100,chat.getHeight()+40));
-                    //jsp.setPreferredSize(new Dimension(100,jsp.getHeight()+40));
                     
                 }
                 
