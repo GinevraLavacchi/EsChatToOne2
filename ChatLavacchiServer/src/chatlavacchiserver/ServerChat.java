@@ -29,6 +29,7 @@ public class ServerChat implements Runnable
     DataOutputStream outVersoClient;
     ArrayList<Contenitore> client;
     DataOutputStream outVersoClient2;
+    int mom;
     /**
      * costruttore con parametri
      * @param s
@@ -37,6 +38,7 @@ public class ServerChat implements Runnable
     public ServerChat(Socket s,ArrayList<Contenitore> a){
         contenitoresocketclient=new Contenitore(s);
         client=a;
+        mom=client.size();
         try {
             inDalClient=new BufferedReader(new InputStreamReader(contenitoresocketclient.getMySocket().getInputStream()));
             outVersoClient=new DataOutputStream(contenitoresocketclient.getMySocket().getOutputStream());
@@ -73,9 +75,7 @@ public class ServerChat implements Runnable
             System.out.println(nomeclient+" >> connesso.");
             comunicazione=true;
         }
-        System.out.println("PUO INIZIARE");
-        outVersoClient.writeBytes("avviso:::"+" puoi iniziare a scrivere.\n");
-        
+       
         if(client.size()>1)//controllo se ci sono almeno 2 client connessi
         {
             client.forEach((c) -> //invio il mess ad ogni client connesso
@@ -115,7 +115,7 @@ public class ServerChat implements Runnable
             System.out.println(Thread.currentThread().getName()+" >> "+"In attesa del messaggio da parte del client.");
             messaggio=inDalClient.readLine();
             String[] appoggio=messaggio.split(":::");
-            
+            //if(mom>client.size())
             if(inDalClient==null||appoggio[1].toUpperCase().equals("ADDIO"))//guardo se un client ha deciso di uscire
             {
                 outVersoClient.writeBytes("ADDIO\n");
@@ -127,7 +127,7 @@ public class ServerChat implements Runnable
                         {
                             try {
                                 outVersoClient2=new DataOutputStream(c.getMySocket().getOutputStream());
-                                outVersoClient2.writeBytes("avvisoDisc:::"+nomeclient+" si e' disconnesso.\n");
+                                outVersoClient2.writeBytes("avvisoDisc:::"+nomeclient+" :::si e' disconnesso.\n");
                             }
                             catch (IOException e) {
                                 System.out.println(e.getMessage());
@@ -147,7 +147,7 @@ public class ServerChat implements Runnable
                     {
                         client.forEach((partner) -> //invio il messaggio agli altri client
                         {
-                            if(!partner.equals(this.contenitoresocketclient.getMySocket()))//evito di inviarlo a me stesso
+                            if(!partner.equals(this.contenitoresocketclient.getMySocket()))
                             {
                                 try 
                                 {
@@ -179,7 +179,7 @@ public class ServerChat implements Runnable
                 }
                 else//se è rimasto solo 1 client
                 {
-                    outVersoClient.writeBytes("tutti:::"+"si sono tutti disconnessi\n");
+                    outVersoClient.writeBytes("avvisoDisc:::"+"si sono tutti disconnessi\n");
                 }
             }
         }

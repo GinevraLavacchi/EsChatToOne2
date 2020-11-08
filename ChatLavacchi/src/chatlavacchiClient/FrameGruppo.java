@@ -8,9 +8,13 @@ package chatlavacchiClient;
 import java.awt.*;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 /**
@@ -33,8 +37,10 @@ public class FrameGruppo extends JFrame
     BufferedReader inDalServer;
     String nomeserver="localhost";
     int portaserver=1234;
+    Image img;
     public FrameGruppo() throws IOException
     {
+       
         socket=new Socket(nomeserver,portaserver);//creo un socket
         //associo due oggetti al socket per effettuare la lettura e la scrittura
         outVersoServer=new DataOutputStream(socket.getOutputStream());
@@ -81,7 +87,7 @@ public class FrameGruppo extends JFrame
         c.gridy++;
         //chat=rm.getPannello();
         jsp=new JScrollPane(chat);
-        jsp.setPreferredSize(new Dimension(320,190));
+        jsp.setPreferredSize(new Dimension(350,190));
         pannello.add(jsp,c);//la aggiungo al pannello
         chat.setVisible(true);
          RicevereMess rm=new RicevereMess(jsp,chat,inDalServer,elenco);
@@ -106,7 +112,7 @@ public class FrameGruppo extends JFrame
         pannello.add(inviaMess, c);//aggiungo il bottone al pannello
         chat.setBorder(BorderFactory.createLineBorder(Color.black));
         this.add(pannello,x);//aggiungo il pannello al frame
-        this.setSize(800, 400);
+        this.setSize(790, 400);
         ////////////////////////////
         pannello1=new JPanel();//creo il secondo pannello che conterrà gli oggetti per avviare una chat privata
         pannello1.setLayout(new GridBagLayout());
@@ -116,7 +122,7 @@ public class FrameGruppo extends JFrame
         c1.gridy=0;
         c1.insets =  new Insets(0,0,0,0);
         chatpriv=new JLabel("<html>Se vuoi iniziare una chat privata con un partecipante di questo gruppo scegli il suo nome</html>");//creo la label
-        chatpriv.setPreferredSize(new Dimension(250,60));
+        chatpriv.setPreferredSize(new Dimension(350,60));
         c1.gridy++;
         pannello1.add(chatpriv, c1);//la aggiungo al pannello
         chatpriv.setVisible(true);//la rendo visibile
@@ -126,46 +132,9 @@ public class FrameGruppo extends JFrame
         elenco.addActionListener(ec);
         x.gridx++;
         this.add(pannello1,x);
+        pannello.setBackground(Color.getHSBColor(0.9f,0.2f,0.9f));
+        pannello1.setBackground(Color.getHSBColor(0.9f,0.2f,0.9f));
+        this.setBackground(Color.getHSBColor(0.9f,0.2f,0.9f));
     }
-    /*JFrame f=new JFrame("Corsa Cavalli");
-            JPanel pannello=new JPanel();
-            pannello.setLayout(new GridBagLayout());
-            GridBagConstraints c = new GridBagConstraints();
-            c.anchor = GridBagConstraints.CENTER;
-            c.gridx=0;
-            c.gridy=0;
-            c.insets =  new Insets(0,0,0,0);
-            JLabel b=new JLabel("BENVENUTO!!!");
-            pannello.add(b,c);
-            b.setFont(new Font("Times new Roman",Font.BOLD, 18));
-            b.setForeground(Color.red);
-            JLabel n=new JLabel("Quanti sono i fantini?");
-            //JTextField numero=new JTextField(20);
-            c.gridy++;
-            pannello.add(n,c);
-            Vector numpart=new Vector();
-            numpart.add(2);
-            numpart.add(3);
-            numpart.add(4);
-            numpart.add(5);
-            numpart.add(6);
-            numpart.add(7);
-            numpart.add(8);
-            numpart.add(9);
-            numpart.add(10);
-        
-        JComboBox elencop=new JComboBox(numpart);
-           c.gridy++;
-            pannello.add(elencop,c);
-            JButton bottone=new JButton("Inizia");
-            EventoInizia ei=new EventoInizia(elencop);
-            bottone.addActionListener(ei);
-            c.gridy++;
-            pannello.add(bottone,c);
-            f.add(pannello);
-            f.setVisible(true);
-            f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            f.setSize(500,300);
-            bottone.setBackground(Color.pink);
-            elencop.setBackground(Color.pink);*/
+    
 }

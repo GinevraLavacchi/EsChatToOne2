@@ -5,6 +5,7 @@
  */
 package chatlavacchiClient;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -19,6 +20,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.border.LineBorder;
 /**
@@ -104,23 +106,14 @@ class RicevereMess implements Runnable
                             elenco.addItem(nome);
                         }
                     }
-                    /*elencoNomi.add(nome);
-                    String[] array = new String[elencoNomi.size()];
-                    for(int i = 0; i < array.length; i++) {
-                        array[i] = elencoNomi.get(i);
-                    }
-                    //String[] array = elencoNomi.toArray(new String[elencoNomi.size()]);
-                    elenco= new JComboBox(array);
-                    //elenco.addItem(elencoNomi.toString());
-                    */
                     
                     JLabel nuovo=new JLabel("<html>"+appo+"</html>");
-                    nuovo.setPreferredSize(new Dimension(300,40));
-                    nuovo.setBorder(new LineBorder(Color.black, 2, true));
+                    nuovo.setPreferredSize(new Dimension(300,20));
+                    nuovo.setAlignmentX(Component.LEFT_ALIGNMENT);
+                    nuovo.setBorder(new LineBorder(Color.black, 1, true));
                     nuovo.setVisible(true);
                     Box b= Box.createVerticalBox() ;
                     b.add(nuovo);
-                    
                     chat.add(b);
                     jsp.setViewportView(chat);
                     chat.setPreferredSize(new Dimension(100,chat.getHeight()+40));
@@ -130,10 +123,10 @@ class RicevereMess implements Runnable
                 {
                     String appo=appoggio[1];
                     System.out.println(appo);
-                    JLabel nuovo=new JLabel("<html>"+appo+"</html>");
-                    nuovo.setBorder(new LineBorder(Color.red, 2, true));
-                    //JTextArea nuovo=new JTextArea("<html>"+risposta+"</html>");
-                    nuovo.setPreferredSize(new Dimension(300,40));
+                    JLabel nuovo=new JLabel("<html>"+appo+"</html>",SwingConstants.RIGHT);
+                    nuovo.setBorder(new LineBorder(Color.red, 1, true));
+                    //nuovo.setAlignmentX(Component.RIGHT_ALIGNMENT);
+                    nuovo.setPreferredSize(new Dimension(300,20));
                     nuovo.setVisible(true);
                     chat.add(nuovo);
                     jsp.setViewportView(chat);
@@ -146,10 +139,11 @@ class RicevereMess implements Runnable
                     String nome=appoggio[1];
                     System.out.println(nome);
                     elenco.addItem(nome);
-                    JLabel nuovo=new JLabel("<html>"+appo+"</html>");
-                    nuovo.setBorder(new LineBorder(Color.red, 2, true));
-                    //JTextArea nuovo=new JTextArea("<html>"+risposta+"</html>");
-                    nuovo.setPreferredSize(new Dimension(300,40));
+                    //elencoNomi.add(nome);
+                    JLabel nuovo=new JLabel("<html>"+appo+"</html>",SwingConstants.RIGHT);
+                    nuovo.setBorder(new LineBorder(Color.red, 1, true));
+                    //nuovo.setAlignmentX(Component.RIGHT_ALIGNMENT);
+                    nuovo.setPreferredSize(new Dimension(300,20));
                     nuovo.setVisible(true);
                     chat.add(nuovo);
                     jsp.setViewportView(chat);
@@ -157,12 +151,14 @@ class RicevereMess implements Runnable
                 }
                 if(appoggio[0].equals("avvisoDisc"))
                 {
-                    String appo=appoggio[1];
+                    String appo=appoggio[1]+appoggio[2];
+                    String nome=appoggio[1];
                     System.out.println(appo);
-                    JLabel nuovo=new JLabel("<html>"+appo+"</html>");
-                    nuovo.setBorder(new LineBorder(Color.red, 2, true));
-                    //JTextArea nuovo=new JTextArea("<html>"+risposta+"</html>");
-                    nuovo.setPreferredSize(new Dimension(300,40));
+                    JLabel nuovo=new JLabel("<html>"+appo+"</html>",SwingConstants.RIGHT);
+                    //nuovo.setAlignmentX(Component.RIGHT_ALIGNMENT);
+                    elenco.removeItem(nome);
+                    nuovo.setBorder(new LineBorder(Color.red, 1, true));
+                    nuovo.setPreferredSize(new Dimension(300,20));
                     nuovo.setVisible(true);
                     chat.add(nuovo);
                     jsp.setViewportView(chat);

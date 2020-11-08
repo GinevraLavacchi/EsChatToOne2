@@ -88,17 +88,4 @@ public class FramePrivata extends JFrame
         chat.setBorder(BorderFactory.createLineBorder(Color.black));
     }
 }
-/*chat=new JPanel();//creo la label in cui vado a visualizzare i messaggi
-        chat.setPreferredSize(new Dimension(300,190));
-        //chat.setLayout(new FlowLayout());
-        c.gridy++;
-        //chat=rm.getPannello();
-        jsp=new JScrollPane(chat);
-        jsp.setPreferredSize(new Dimension(320,190));
-        pannello.add(jsp,c);//la aggiungo al pannello
-        chat.setVisible(true);
-         RicevereMess rm=new RicevereMess(jsp,chat,inDalServer);
-        //jsp.setViewportView();
-        Thread t=new Thread(rm);
-        t.start();
-         SwingUtilities.updateComponentTreeUI(chat);*/
+
