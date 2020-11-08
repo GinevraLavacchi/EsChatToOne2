@@ -68,13 +68,13 @@ public class ServerChat implements Runnable
         boolean comunicazione=false;
         while(!comunicazione)
         {
-            outVersoClient.writeBytes(" devi inserire il tuo nome per primo.\n");
+            outVersoClient.writeBytes("tutti:::"+" devi inserire il tuo nome per primo.\n");
             nomeclient=inDalClient.readLine();//legge il nome del client
             System.out.println(nomeclient+" >> connesso.");
             comunicazione=true;
         }
         System.out.println("PUO INIZIARE");
-        outVersoClient.writeBytes(" puoi iniziare a scrivere.\n");
+        outVersoClient.writeBytes("tutti:::"+" puoi iniziare a scrivere.\n");
         
         if(client.size()>1)//controllo se ci sono almeno 2 client connessi
         {
@@ -85,7 +85,7 @@ public class ServerChat implements Runnable
                     try 
                     {
                         outVersoClient2=new DataOutputStream(c.getMySocket().getOutputStream());
-                        outVersoClient2.writeBytes(nomeclient+" si e' connesso.\n");
+                        outVersoClient2.writeBytes("tutti:::"+nomeclient+" si e' connesso.\n");
                     }
                     catch (IOException e) 
                     {
@@ -100,7 +100,7 @@ public class ServerChat implements Runnable
         {
             try 
             {
-                outVersoClient.writeBytes("Sei l'unico utente attualemente connesso.\n");
+                outVersoClient.writeBytes("tutti:::"+"Sei l'unico utente attualemente connesso.\n");
             } 
             catch (IOException e) 
             {
@@ -127,7 +127,7 @@ public class ServerChat implements Runnable
                         {
                             try {
                                 outVersoClient2=new DataOutputStream(c.getMySocket().getOutputStream());
-                                outVersoClient2.writeBytes(nomeclient+" si e' disconnesso.\n");
+                                outVersoClient2.writeBytes("tutti:::"+nomeclient+" si e' disconnesso.\n");
                             }
                             catch (IOException e) {
                                 System.out.println(e.getMessage());
@@ -152,14 +152,14 @@ public class ServerChat implements Runnable
                                 try 
                                 {
                                     outVersoClient2=new DataOutputStream(partner.getMySocket().getOutputStream());
-                                    outVersoClient2.writeBytes("Da: "+nomeclient+"\nTesto: "+messaggio+'\n');
+                                    outVersoClient2.writeBytes("tutti:::"+"Da: "+nomeclient+"--> Testo: "+appoggio[1]+'\n');
                                 }
                                 catch (IOException e) 
                                 {
                                     try 
                                     {
                                         System.out.println(e.getMessage());
-                                        outVersoClient.writeBytes("Errore durante la comunicazione col partner");
+                                        outVersoClient.writeBytes("tutti:::"+"Errore durante la comunicazione col partner");
                                     }
                                     catch (IOException ex) 
                                     {
@@ -179,7 +179,7 @@ public class ServerChat implements Runnable
                 }
                 else//se è rimasto solo 1 client
                 {
-                    outVersoClient.writeBytes("si sono tutti disconnessi\n");
+                    outVersoClient.writeBytes("tutti:::"+"si sono tutti disconnessi\n");
                 }
             }
         }
@@ -199,14 +199,14 @@ public class ServerChat implements Runnable
                 try 
                 {
                     outVersoClient2=new DataOutputStream(partner.getMySocket().getOutputStream());
-                    outVersoClient2.writeBytes("Privato Da: "+nomeclient+"\nTesto: "+appo[1]+'\n');
+                    outVersoClient2.writeBytes("Privato::: Da: "+nomeclient+"\nTesto: "+appo[1]+'\n');
                 }
                 catch (IOException e) 
                 {
                     try 
                     {
                         System.out.println(e.getMessage());
-                        outVersoClient.writeBytes("Errore durante la comunicazione col partner");
+                        outVersoClient.writeBytes("Privato::: Da: "+"Errore durante la comunicazione col partner");
                     }
                     catch (IOException ex) 
                     {

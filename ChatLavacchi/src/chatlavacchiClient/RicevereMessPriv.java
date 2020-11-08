@@ -20,7 +20,7 @@ import javax.swing.SwingUtilities;
  *
  * @author Ginevra
  */
-class RicevereMess implements Runnable
+class RicevereMessPriv implements Runnable
 {
     /**
      * @param socket
@@ -41,11 +41,8 @@ class RicevereMess implements Runnable
      * contruttore con parametro
      * @param c 
      */
-    public RicevereMess(JScrollPane jsp,JPanel p,BufferedReader i ){
-        //this.input_tastiera=c.input_tastiera;
-        /*this.messaggio=c.messaggio;
-        this.risposta=c.risposta;*/
-        //this.outVersoServer=c.outVersoServer;
+    public RicevereMessPriv(JScrollPane jsp,JPanel p,BufferedReader i ){
+        
         this.inDalServer=i;
         this.chat=p;
         this.jsp=jsp;
@@ -63,7 +60,7 @@ class RicevereMess implements Runnable
                 /*if(appoggio[1].toUpperCase().equals("ADDIO")){
                     return;
                 }*/
-                if(appoggio[0].equals("tutti"))
+                if(appoggio[0].equals("Privato"))
                 {
                     String appo=appoggio[1];
                     System.out.println(appo);

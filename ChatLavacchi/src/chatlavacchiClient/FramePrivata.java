@@ -11,7 +11,9 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.InputStreamReader;
 import javax.swing.*;
 
 /**
@@ -27,9 +29,12 @@ public class FramePrivata extends JFrame
     JTextField messaggio;
     JButton inviaMess;
     DataOutputStream outVersoServer;
-    public FramePrivata(String nome,DataOutputStream outVersoServer )
+    BufferedReader inDalServer;
+    JScrollPane jsp;
+    public FramePrivata(String nome,DataOutputStream outVersoServer,BufferedReader inDalServer )
     {
         this.outVersoServer=outVersoServer;
+        this.inDalServer=inDalServer;
         this.nome=nome;
         p=new JPanel();
         p.setVisible( true);
@@ -49,15 +54,21 @@ public class FramePrivata extends JFrame
         p.add(label, c);
         c.gridy++;
         this.setVisible(true);
-        this.setSize(400, 400);
+        this.setSize(800, 400);
         chat=new JPanel();//creo la label in cui vado a visualizzare i messaggi
-        chat.setPreferredSize(new Dimension(100,190));
+        chat.setPreferredSize(new Dimension(300,190));
+        //chat.setLayout(new FlowLayout());
         c.gridy++;
-        p.add(chat,c);//la aggiungo al pannello
+        //chat=rm.getPannello();
+        jsp=new JScrollPane(chat);
+        jsp.setPreferredSize(new Dimension(320,190));
+        p.add(jsp,c);//la aggiungo al pannello
         chat.setVisible(true);
-        /*RicevereMess rm=new RicevereMess(chat,inDalServer);
+         RicevereMess rm=new RicevereMess(jsp,chat,inDalServer);
+        //jsp.setViewportView();
         Thread t=new Thread(rm);
-        t.start();*/
+        t.start();
+         SwingUtilities.updateComponentTreeUI(chat);
         JLabel m=new JLabel("Messaggio-->");
         c.gridy++;
         p.add(m, c);
@@ -77,3 +88,17 @@ public class FramePrivata extends JFrame
         chat.setBorder(BorderFactory.createLineBorder(Color.black));
     }
 }
+/*chat=new JPanel();//creo la label in cui vado a visualizzare i messaggi
+        chat.setPreferredSize(new Dimension(300,190));
+        //chat.setLayout(new FlowLayout());
+        c.gridy++;
+        //chat=rm.getPannello();
+        jsp=new JScrollPane(chat);
+        jsp.setPreferredSize(new Dimension(320,190));
+        pannello.add(jsp,c);//la aggiungo al pannello
+        chat.setVisible(true);
+         RicevereMess rm=new RicevereMess(jsp,chat,inDalServer);
+        //jsp.setViewportView();
+        Thread t=new Thread(rm);
+        t.start();
+         SwingUtilities.updateComponentTreeUI(chat);*/

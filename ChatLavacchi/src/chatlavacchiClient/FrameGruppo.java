@@ -75,17 +75,19 @@ public class FrameGruppo extends JFrame
         pannello.add(inviaNome, c);//aggiungo il bottone al pannello
         
         chat=new JPanel();//creo la label in cui vado a visualizzare i messaggi
-        chat.setPreferredSize(new Dimension(100,190));
+        chat.setPreferredSize(new Dimension(300,190));
         //chat.setLayout(new FlowLayout());
         c.gridy++;
         //chat=rm.getPannello();
         jsp=new JScrollPane(chat);
-        jsp.setPreferredSize(new Dimension(100,190));
+        jsp.setPreferredSize(new Dimension(320,190));
         pannello.add(jsp,c);//la aggiungo al pannello
         chat.setVisible(true);
-         RicevereMess rm=new RicevereMess(chat,inDalServer);
+         RicevereMess rm=new RicevereMess(jsp,chat,inDalServer);
+        //jsp.setViewportView();
         Thread t=new Thread(rm);
         t.start();
+         SwingUtilities.updateComponentTreeUI(chat);
         /////////
         JLabel m=new JLabel("Messaggio-->");
         c.gridy++;
@@ -103,7 +105,7 @@ public class FrameGruppo extends JFrame
         pannello.add(inviaMess, c);//aggiungo il bottone al pannello
         chat.setBorder(BorderFactory.createLineBorder(Color.black));
         this.add(pannello,x);//aggiungo il pannello al frame
-        this.setSize(600, 400);
+        this.setSize(800, 400);
         ////////////////////////////
         pannello1=new JPanel();//creo il secondo pannello che conterrà gli oggetti per avviare una chat privata
         pannello1.setLayout(new GridBagLayout());
@@ -121,7 +123,7 @@ public class FrameGruppo extends JFrame
         elenco= new JComboBox(momentaneo);
         c1.gridy++;
         pannello1.add(elenco, c);
-        EventoChatP ec=new EventoChatP(elenco,outVersoServer);
+        EventoChatP ec=new EventoChatP(elenco,outVersoServer, inDalServer);
         elenco.addActionListener(ec);
         x.gridx++;
         this.add(pannello1,x);
