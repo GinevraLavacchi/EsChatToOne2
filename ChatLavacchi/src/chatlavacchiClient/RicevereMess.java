@@ -12,6 +12,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.io.*;
 import java.net.*;
+import java.util.ArrayList;
+import javax.swing.Box;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -41,6 +43,8 @@ class RicevereMess implements Runnable
     private JPanel chat;
     JScrollPane jsp;
     JComboBox elenco;
+    ArrayList<String> elencoNomi;
+    boolean cont=false;
     /**
      * contruttore con parametro
      * @param c 
@@ -54,6 +58,8 @@ class RicevereMess implements Runnable
         this.chat=p;
         this.jsp=jsp;
         this.elenco=elenco;
+        elencoNomi=new ArrayList<String>();
+        
     }
     @Override
     /**
@@ -74,32 +80,50 @@ class RicevereMess implements Runnable
                     System.out.println(appo);
                     String nome=appoggio[2];
                     System.out.println(nome);
-                    if(elenco.getItemCount()>0)
+                    System.out.println("fuori for"+"-->numero elementi"+elenco.getItemCount());
+                    
+                    if(elencoNomi.isEmpty())
                     {
-                        for(int i=0;i<elenco.getItemCount()+1;i++)
-                        {
-                            if(elenco.getItemAt(i).equals(nome))
-                            {
-                                return;
-                            }
-                            else
-                            {
-                                elenco.addItem(nome);
-                            }
-                        }
+                        elencoNomi.add(nome);
+                        elenco.addItem(nome);
                     }
                     else
                     {
-                        elenco.addItem(nome);
+                        elencoNomi.forEach((c) -> //controllo che non sia già presente nell'array
+                        {
+                            for(int i=0;i<elencoNomi.size();i++)
+                            {
+                                if(c.equals(elencoNomi.get(i)))
+                                {
+                                    cont=true;
+                                }
+                            }
+                        });
+                        if(cont==false)
+                        {
+                            elenco.addItem(nome);
+                        }
                     }
+                    /*elencoNomi.add(nome);
+                    String[] array = new String[elencoNomi.size()];
+                    for(int i = 0; i < array.length; i++) {
+                        array[i] = elencoNomi.get(i);
+                    }
+                    //String[] array = elencoNomi.toArray(new String[elencoNomi.size()]);
+                    elenco= new JComboBox(array);
+                    //elenco.addItem(elencoNomi.toString());
+                    */
+                    
                     JLabel nuovo=new JLabel("<html>"+appo+"</html>");
                     nuovo.setPreferredSize(new Dimension(300,40));
                     nuovo.setBorder(new LineBorder(Color.black, 2, true));
                     nuovo.setVisible(true);
-                    chat.add(nuovo);
+                    Box b= Box.createVerticalBox() ;
+                    b.add(nuovo);
+                    
+                    chat.add(b);
                     jsp.setViewportView(chat);
                     chat.setPreferredSize(new Dimension(100,chat.getHeight()+40));
-                    //jsp.setPreferredSize(new Dimension(100,jsp.getHeight()+40));
                     
                 }
                if(appoggio[0].equals("avviso"))
