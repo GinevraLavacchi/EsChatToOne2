@@ -10,10 +10,12 @@ package chatlavacchiserver;
  * @author Ginevra
  */
 public class ServerChatApplication {
+    /**
+     * il main
+     * @param args 
+     */
     public static void main(String[] args) {
-        /**
-        * @param args the command line arguments
-        */
+        
         MultiServer s=new MultiServer();
         s.start();
     } 

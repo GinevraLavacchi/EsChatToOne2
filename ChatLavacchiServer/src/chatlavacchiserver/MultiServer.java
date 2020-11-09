@@ -10,15 +10,14 @@ import java.util.ArrayList;
 /**
  *
  * @author Ginevra
+ * la classe che gestisce la creazione dei thread server
+ * @param serversocket la porta
+ * @param client l'arrayList contenente i contenitori
  */
 public class MultiServer 
 {
-    /**
-     * @param serversocket
-     * @param client
-     */
-    ServerSocket serversocket;
-    ArrayList<Socket> client=new ArrayList();
+    private ServerSocket serversocket;
+    private ArrayList<Contenitore> client=new ArrayList();
     /**
      * il metodo start si occupa della connessione dei client e dell'assegnazione ai thread
      */
@@ -31,7 +30,7 @@ public class MultiServer
             {
                 System.out.println("Nuovo thread in attesa di un client.");
                 Socket clientsocket=serversocket.accept();//rimane in attesa del client
-                client.add(clientsocket);//aggiunge il client all'array
+                client.add(new Contenitore(clientsocket));//aggiunge il client all'array
                 ServerChat serverthread=new ServerChat(clientsocket,client); //crea un oggetto ServerChat a cui passa il socket e l'array
                 Thread t=new Thread(serverthread); //l'oggetto viene assegnato ad un thread
                 t.start();//il thread viene fatto partire
