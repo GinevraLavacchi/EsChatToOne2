@@ -90,16 +90,16 @@ public class FrameGruppo extends JFrame
         benvenuto.setFont(new Font("Times new Roman",Font.BOLD, 18));
         benvenuto.setForeground(Color.red);
         ////////////////////////////////
-        JLabel n=new JLabel("Nome:");
+        /*JLabel n=new JLabel("Nome:");
         n.setForeground(Color.WHITE);
         c.gridy++;
         pannello.add(n, c);
-        n.setLocation(50, 0);
+        n.setLocation(50, 0);*/
         ////////////////////////////////
-        nome=new JTextField();//creo la JTextField
+        nome=new JTextField("nome");//creo la JTextField
         nome.setPreferredSize(new Dimension(70, 20));
         nome.setBounds(50,150,150,20);
-        c.gridx++;
+        c.gridy++;
         pannello.add(nome, c);//la aggiungo al pannello
         ////////////////////////////////
         inviaNome=new JButton("Invia");//creo il bottone
@@ -125,22 +125,21 @@ public class FrameGruppo extends JFrame
         t.start();
          SwingUtilities.updateComponentTreeUI(chat);
         ////////////////////////////////
-        JLabel m=new JLabel("Messaggio-->");
+        /*JLabel m=new JLabel("Messaggio-->");
         m.setForeground(Color.WHITE);
         c.gridy++;
-        pannello.add(m, c);
+        pannello.add(m, c);*/
         ////////////////////////////////
-        messaggio=new JTextField();//creo la JTextField
+        messaggio=new JTextField("messaggio");//creo la JTextField
         messaggio.setPreferredSize(new Dimension(70, 20));
         messaggio.setBounds(50,150,150,20);
-        c.gridx++;
+        c.gridy++;
         pannello.add(messaggio, c);//la aggiungo al pannello
         ////////////////////////////////
         inviaMess=new JButton("Invia");//creo il bottone
         EventoInviaMess em=new EventoInviaMess(messaggio, outVersoServer);//creo l'evento per inviare il nome
         inviaMess.addActionListener(em);
         c.gridy++;
-        c.gridx--;
         pannello.add(inviaMess, c);//aggiungo il bottone al pannello
         ////////////////////////////////
        panSotto.add(pannello,x);//aggiungo il pannello al frame

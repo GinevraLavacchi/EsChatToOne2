@@ -54,10 +54,12 @@ public class FramePrivata extends JFrame
         this.inDalServer=inDalServer;
         this.nome=nome;
         ////////////////////////////////
+        PannelloSottoPriv psp=new PannelloSottoPriv();
+        this.add(psp);
         p=new JPanel();//creo il pannello
         p.setVisible( true);//lo rendo visibile
-        p.setBackground(Color.CYAN);
-        this.add(p);
+        p.setOpaque(false);
+        psp.add(p);
         p.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         c.anchor = GridBagConstraints.CENTER;
@@ -71,6 +73,7 @@ public class FramePrivata extends JFrame
         ////////////////////////////////
         label=new JLabel("<html> Stai comunicando con:"+nome+"</html>");
         c.gridy++;
+        label.setForeground(Color.white);
         p.add(label, c);
         ////////////////////////////////
         c.gridy++;
@@ -88,27 +91,20 @@ public class FramePrivata extends JFrame
         t.start();
         SwingUtilities.updateComponentTreeUI(chat);
         ////////////////////////////////
-        JLabel m=new JLabel("Messaggio-->");
-        c.gridy++;
-        p.add(m, c);
-        ////////////////////////////////
-        messaggio=new JTextField();//creo la JTextField
+        messaggio=new JTextField("messaggio");//creo la JTextField
         messaggio.setPreferredSize(new Dimension(70, 20));
         messaggio.setBounds(50,150,150,20);
-        c.gridx++;
+        c.gridy++;
         p.add(messaggio, c);//la aggiungo al pannello
         ////////////////////////////////
         inviaMess=new JButton("Invia");//creo il bottone
-        c.gridx++;
-        p.add(inviaMess, c);
         EventoInviaPriv ei=new EventoInviaPriv(messaggio, outVersoServer,nome);//creo l'evento per inviare il nome
         inviaMess.addActionListener(ei);
         c.gridy++;
-        c.gridx--;
         p.add(inviaMess, c);//aggiungo il bottone al pannello
         ////////////////////////////////
         this.setVisible(true);
-        this.setSize(800, 400);
+        this.setSize(790, 400);
     }
 }
 
