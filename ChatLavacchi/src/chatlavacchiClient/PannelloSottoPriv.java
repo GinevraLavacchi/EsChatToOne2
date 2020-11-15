@@ -15,9 +15,14 @@ import javax.swing.JPanel;
 /**
  *
  * @author Ginevra
+ * la classe che visualizza lo sfondo della chat privata
+ * @param Image l'immagine di sfondo
  */
 public class PannelloSottoPriv extends JPanel{
     Image image;
+    /**
+     * costruttore
+     */
     public PannelloSottoPriv()
     {
         try
@@ -37,6 +42,10 @@ public class PannelloSottoPriv extends JPanel{
         catch(Exception e)
         {}
     }
+    /**
+     * visualizza l'immagine di sfondo
+     * @param g 
+     */
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         g.drawImage(image, 0, 0, null);
