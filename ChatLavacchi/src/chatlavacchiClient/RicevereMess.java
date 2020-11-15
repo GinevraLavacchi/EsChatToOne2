@@ -14,6 +14,7 @@ import java.awt.Insets;
 import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
+import static java.util.Objects.isNull;
 import javax.swing.Box;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -54,7 +55,7 @@ class RicevereMess implements Runnable
         this.chat=p;
         this.jsp=jsp;
         this.elenco=elenco;
-        elencoNomi=new ArrayList<String>();
+       elencoNomi=new ArrayList<String>();
         
     }
     @Override
@@ -78,26 +79,25 @@ class RicevereMess implements Runnable
                     System.out.println(nome);
                     //System.out.println("fuori for"+"-->numero elementi"+elenco.getItemCount());
                     
-                    if(elencoNomi.isEmpty())//guardo se l'elenco è vuoto
+                    if(isNull(elenco))//guardo se l'elenco è vuoto
                     {
-                        elencoNomi.add(nome);
                         elenco.addItem(nome);
+                        elencoNomi.add(nome);
                     }
                     else
                     {
-                        elencoNomi.forEach((c) -> //controllo che non sia già presente nell'array
+                        for(int i=0;i<elencoNomi.size();i++)
                         {
-                            for(int i=0;i<elencoNomi.size();i++)
+                            if(nome.equals(elencoNomi.get(i)))
                             {
-                                if(c.equals(elencoNomi.get(i)))
-                                {
-                                    cont=true;
-                                }
+                                cont=true;
                             }
-                        });
+                        }
                         if(cont==false)
                         {
                             elenco.addItem(nome);
+                            elencoNomi.add(nome);
+                            System.out.println("numero elementi nell'elenco:"+elenco.getComponentCount());
                         }
                     }
                     
@@ -131,6 +131,7 @@ class RicevereMess implements Runnable
                     String nome=appoggio[1];
                     System.out.println(nome);
                     elenco.addItem(nome);
+                    elencoNomi.add(nome);
                     JLabel nuovo=new JLabel("<html>"+appo+"</html>",SwingConstants.RIGHT);//creo la label
                     nuovo.setBorder(new LineBorder(Color.red, 1, true));
                     nuovo.setPreferredSize(new Dimension(300,20));
@@ -146,6 +147,7 @@ class RicevereMess implements Runnable
                     System.out.println(appo);
                     JLabel nuovo=new JLabel("<html>"+appo+"</html>",SwingConstants.RIGHT);//creo la label
                     elenco.removeItem(nome);
+                    elencoNomi.remove(nome);
                     nuovo.setBorder(new LineBorder(Color.red, 1, true));
                     nuovo.setPreferredSize(new Dimension(300,20));
                     nuovo.setVisible(true);

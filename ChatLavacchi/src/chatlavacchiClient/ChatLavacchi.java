@@ -5,8 +5,11 @@
  */
 package chatlavacchiClient;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -26,5 +29,8 @@ public class ChatLavacchi {
         FrameGruppo f=new FrameGruppo();
         f.setVisible(true);
         f.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        //f.setDefaultCloseOperation (FrameGruppo.DO_NOTHING_ON_CLOSE);
+            // nessun else  cosi' come scritto prima nn facciamo nulla  }}
+
     }
 }

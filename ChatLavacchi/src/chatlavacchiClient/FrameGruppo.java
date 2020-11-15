@@ -45,7 +45,7 @@ public class FrameGruppo extends JFrame
     private JLabel benvenuto, chatpriv,mess;
     private JTextField nome,messaggio;
     private JButton inviaNome,inviaMess;
-    private JComboBox elenco=new JComboBox();
+    private static JComboBox elenco=new JComboBox();
     private JScrollPane jsp;
      Socket socket;
     private DataOutputStream outVersoServer;
@@ -64,16 +64,20 @@ public class FrameGruppo extends JFrame
         outVersoServer=new DataOutputStream(socket.getOutputStream());
         inDalServer=new BufferedReader(new InputStreamReader(socket.getInputStream()));
         /////////////////////////////
-        this.setLayout(new GridBagLayout());
+        ////////////////////////////////
+        PannelloSfondo panSotto=new PannelloSfondo();
+        panSotto.setVisible(true);
+        panSotto.setLayout(new GridBagLayout());
         GridBagConstraints x = new GridBagConstraints();
         x.anchor = GridBagConstraints.CENTER;
         x.gridx=0;
         x.gridy=0;
         x.insets =  new Insets(0,0,0,0);
-        ////////////////////////////////
+        this.getContentPane().add(panSotto);
+        ///////////////////////////////
         pannello=new JPanel();//creo il pannello
         pannello.setLayout(new GridBagLayout());
-        pannello.setBackground(Color.getHSBColor(0.9f,0.2f,0.9f));
+        pannello.setOpaque(false);
         pannello.setVisible(true);//rendo visibile il pannello
         GridBagConstraints c = new GridBagConstraints();
         c.anchor = GridBagConstraints.CENTER;
@@ -87,6 +91,7 @@ public class FrameGruppo extends JFrame
         benvenuto.setForeground(Color.red);
         ////////////////////////////////
         JLabel n=new JLabel("Nome:");
+        n.setForeground(Color.WHITE);
         c.gridy++;
         pannello.add(n, c);
         n.setLocation(50, 0);
@@ -121,6 +126,7 @@ public class FrameGruppo extends JFrame
          SwingUtilities.updateComponentTreeUI(chat);
         ////////////////////////////////
         JLabel m=new JLabel("Messaggio-->");
+        m.setForeground(Color.WHITE);
         c.gridy++;
         pannello.add(m, c);
         ////////////////////////////////
@@ -137,12 +143,12 @@ public class FrameGruppo extends JFrame
         c.gridx--;
         pannello.add(inviaMess, c);//aggiungo il bottone al pannello
         ////////////////////////////////
-        this.add(pannello,x);//aggiungo il pannello al frame
-        this.setSize(790, 400);
+       panSotto.add(pannello,x);//aggiungo il pannello al frame
+        this.setSize(790, 440);
         ////////////////////////////////
         pannello1=new JPanel();//creo il secondo pannello che conterrà gli oggetti per avviare una chat privata
         pannello1.setLayout(new GridBagLayout());
-        pannello1.setBackground(Color.getHSBColor(0.9f,0.2f,0.9f));
+        pannello1.setOpaque(false);
         GridBagConstraints c1 = new GridBagConstraints();
         c1.anchor = GridBagConstraints.CENTER;
         c1.gridx=0;
@@ -151,17 +157,21 @@ public class FrameGruppo extends JFrame
         ////////////////////////////////
         chatpriv=new JLabel("<html>Se vuoi iniziare una chat privata con un partecipante di questo gruppo scegli il suo nome</html>");//creo la label
         chatpriv.setPreferredSize(new Dimension(350,60));
+        chatpriv.setForeground(Color.WHITE);
         c1.gridy++;
         pannello1.add(chatpriv, c1);//la aggiungo al pannello
         chatpriv.setVisible(true);//la rendo visibile
         ////////////////////////////////
         c1.gridy++;
-        pannello1.add(elenco, c);
+        pannello1.add(elenco, c1);
         EventoChatP ec=new EventoChatP(elenco,outVersoServer, inDalServer);
-        elenco.addActionListener(ec);
+        JButton Partecipante=new JButton("INVIA");
+        Partecipante.addActionListener(ec);
+        c1.gridy++;
+        pannello1.add(Partecipante, c1);
         ////////////////////////////////
         x.gridx++;
-        this.add(pannello1,x);
+        panSotto.add(pannello1,x);
     }
     
 }
